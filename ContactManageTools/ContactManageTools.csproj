@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ContanctManageEntities\ContanctManageEntities.csproj" />
+    <ProjectReference Include="..\ContanctManageEntities\ContactManageEntities.csproj" />
   </ItemGroup>
 
 </Project>

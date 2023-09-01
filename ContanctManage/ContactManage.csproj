@@ -15,7 +15,7 @@
 
 	<ItemGroup>
     <ProjectReference Include="..\ContactManageTools\ContactManageTools.csproj" />
-    <ProjectReference Include="..\ContanctManageServices\ContanctManageServices.csproj" />
+    <ProjectReference Include="..\ContanctManageServices\ContactManageServices.csproj" />
   </ItemGroup>
 
 </Project>
