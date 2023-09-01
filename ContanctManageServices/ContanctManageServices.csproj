@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -7,12 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ContanctManageEntities\ContanctManageEntities.csproj" />
-    <ProjectReference Include="..\ContanctManageRepositories\ContanctManageRepositories.csproj" />
+	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+	  <PackageReference Include="RSCCo.ConfigurationHelper" Version="1.0.0" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.1" />
+
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extention\" />
+    <ProjectReference Include="..\ContanctManageEntities\ContanctManageEntities.csproj" />
+    <ProjectReference Include="..\ContanctManageRepositories\ContanctManageRepositories.csproj" />
   </ItemGroup>
 
 </Project>

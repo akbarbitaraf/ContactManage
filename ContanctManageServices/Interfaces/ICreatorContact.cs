@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContanctManageServices.Interfaces
 {
-    internal interface ICreatorContact
+    public interface ICreatorContact
     {
         public IContact CreatorConstructor(int type);
 
