@@ -1,5 +1,5 @@
 ﻿
-using ContanctManageEntities.Enum;
+using ContactManageEntities.Enum;
 
 namespace ContactManageTools
 {
