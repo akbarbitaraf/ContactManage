@@ -12,6 +12,8 @@ using System.Text.Json.Serialization;
 //using EmployeePanelTools;
 using ContactManageEntities.Mapper;
 using ContactManageServices.Extention;
+using ContactManageServices.Interfaces;
+using ContactManage.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration configuration = builder.Configuration;
@@ -26,43 +28,15 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 builder.Services.ConfigureServices();
-//builder.Services.BuildServiceProvider().GetService<IGlobalServices>().SeedBaseTable();
+builder.Services.BuildServiceProvider().GetService<IGlobalServices>().SeedBaseTable();
 
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "ContactManage", Version = "v1" });
-
-    //var securityScheme = new OpenApiSecurityScheme
-    //{
-    //    Name = "JWT Authentication",
-    //    Description = "Enter JWT Bearer token **_only_**",
-    //    In = ParameterLocation.Header,
-    //    Type = SecuritySchemeType.Http,
-    //    Scheme = "bearer", // must be lower case
-    //    BearerFormat = "JWT",
-    //    Reference = new OpenApiReference
-    //    {
-    //        Id = JwtBearerDefaults.AuthenticationScheme,
-    //        Type = ReferenceType.SecurityScheme
-    //    }
-    //};
-    //c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
-    //c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    //            {
-    //                {securityScheme, new string[] { }}
-    //            });
 });
 
 var app = builder.Build();
-//app.ConfigureCustomExceptionMiddleware();
-//app.UseMiddleware<ExceptionMiddleware>();
-
-
-
-
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors("AllowAll");
 
 var storage_path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Storage");
@@ -80,16 +54,8 @@ app.UseRouting();
 app.Use(async (context, next) =>
 {
     await next();
-
-    //if (context.Response.StatusCode == (int)HttpStatusCode.Unauthorized)
-    //{
-    //    GeneralExtentions.ThrowException("Unauthorized", HttpStatus.Unauthorized);
-
-
-    //}
 });
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-//app.ConfigureMigration();
 app.Run();

@@ -10,10 +10,12 @@ namespace ContactManageServices.Interfaces
 {
     public interface IContact
     {
-        public Task<ContactRes> CreateContact(Contacts contactReq);
+        public Task<Contacts> CreateContact(Contacts contactReq);
         public Task<ContactRes> UpdateContact(Contacts contactReq);
         public Task<ContactRes> DeleteContact(int contactId);
-        public Task<Contacts> GetContact(int contactId);
-        public Task<ContactRes> GetContacts();
+        public Task<List<Contacts>> GetContactsByFilter(ContactReq contactReq);
+        public Task<List<Contacts>> GetContacts();
+        public Task<Contacts> GetContactByID(int contactID);
+
     }
 }

@@ -17,14 +17,18 @@ namespace ContactManageServices
         private readonly ILogger<EssentialContacts> _loggerEssentialContacts;
         private readonly ILogger<NormalContacts> _loggerNormalContacts;
         private readonly ILogger<ReliefContacts> _loggerReliefContacts;
+        private readonly ILogger<GlobalContacts> _loggerGlobalContacts;
 
 
-        public CreatorContact(ContactManageContext contactManage, ILogger<EssentialContacts> loggerEssentialContacts, ILogger<NormalContacts> loggerNormalContacts , ILogger<ReliefContacts> loggerReliefContacts)
+        public CreatorContact(ContactManageContext contactManage, ILogger<EssentialContacts> loggerEssentialContacts, ILogger<NormalContacts> loggerNormalContacts , ILogger<ReliefContacts> loggerReliefContacts
+            , ILogger<GlobalContacts> loggerGlobalContacts
+            )
         {
             _contactManage = contactManage;
             _loggerEssentialContacts = loggerEssentialContacts;
             _loggerNormalContacts = loggerNormalContacts;
             _loggerReliefContacts = loggerReliefContacts;
+            _loggerGlobalContacts = loggerGlobalContacts;
 
         }
         public IContact CreatorConstructor(int type)
@@ -34,7 +38,7 @@ namespace ContactManageServices
                 case 0: return new EssentialContacts(_contactManage , _loggerEssentialContacts);
                 case 1: return new NormalContacts(_contactManage , _loggerNormalContacts);
                 case 2: return new ReliefContacts(_contactManage , _loggerReliefContacts);
-                default: throw new Exception();
+                default: return new GlobalContacts(_contactManage, _loggerGlobalContacts);
 
             }
         }

@@ -12,16 +12,16 @@ using System.Threading.Tasks;
 
 namespace ContactManageServices.Services
 {
-    public class ReliefContacts : IContact
+    public class GlobalContacts : IContact
     {
         private readonly ContactManageContext _contactManage;
-        private readonly ILogger<ReliefContacts> _logger; 
-        public ReliefContacts(ContactManageContext contactManage, ILogger<ReliefContacts> logger)
+        private readonly ILogger<GlobalContacts> _logger;
+        public GlobalContacts(ContactManageContext contactManage, ILogger<GlobalContacts> logger)
         {
+
             _contactManage = contactManage;
             _logger = logger;
         }
-
         public async Task<Contacts> CreateContact(Contacts contactReq)
         {
             await _contactManage.contacts.AddAsync(contactReq);
@@ -29,23 +29,19 @@ namespace ContactManageServices.Services
             contactReq.Id = result;
             return contactReq;
         }
-
-    
-        public Task<ContactRes> DeleteContact(int contactId)
+        public Task DeleteContact(int contactId)
         {
             throw new NotImplementedException();
         }
-
-        public Task<Contacts> GetContact(int contactId)
+        public async Task<Contacts> GetContact(int contactId)
         {
-            throw new NotImplementedException();
+            return await _contactManage.contacts.Where(x => x.Id == contactId).AsNoTracking().FirstOrDefaultAsync();
         }
-
         public async Task<List<Contacts>> GetContacts()
         {
-            return await _contactManage.contacts.AsNoTracking().ToListAsync(); 
-        }
+            throw new NotImplementedException();
 
+        }
         public Task<ContactRes> UpdateContact(Contacts contactReq)
         {
             throw new NotImplementedException();

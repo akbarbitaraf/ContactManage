@@ -34,6 +34,7 @@ namespace ContactManageServices.Extention
         public static void ConfigureServices(this IServiceCollection services)
         {
             services.AddScoped<ICreatorContact, CreatorContact>();
+            services.AddScoped<IGlobalServices,GlobalServices>();
             services.AddTransient<ContactServices>();
             services.ConfigureLoggerService();
 

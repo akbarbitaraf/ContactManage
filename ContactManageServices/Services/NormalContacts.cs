@@ -24,11 +24,12 @@ namespace ContactManageServices.Services
             _contactManage = contactManage;
             _logger = logger;
         }
-        public async Task<ContactRes> CreateContact(Contacts contactReq)
+        public async Task<Contacts> CreateContact(Contacts contactReq)
         {
             await _contactManage.contacts.AddAsync(contactReq);
             var result = await _contactManage.SaveChangesAsync();
-            return new ContactRes();
+            contactReq.Id = result;
+            return contactReq;
         }
 
 
@@ -42,9 +43,9 @@ namespace ContactManageServices.Services
           return  await _contactManage.contacts.Where(x => x.Id == contactId).AsNoTracking().FirstOrDefaultAsync();
         }
 
-        public Task<ContactRes> GetContacts()
+        public async Task<List<Contacts>> GetContacts()
         {
-            throw new NotImplementedException();
+            return await _contactManage.contacts.AsNoTracking().ToListAsync();
         }
 
         public Task<ContactRes> UpdateContact(Contacts contactReq)

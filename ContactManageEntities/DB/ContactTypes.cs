@@ -14,7 +14,8 @@ namespace ContactManageEntities.DB
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Title { get; set; }
-
+        // lazy Loading   
+        public ICollection<Contacts> Contacts { get; set; }
     }
 
 }

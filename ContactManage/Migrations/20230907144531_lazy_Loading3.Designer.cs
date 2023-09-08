@@ -3,6 +3,7 @@ using ContactManageRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ContactManage.Migrations
 {
     [DbContext(typeof(ContactManageContext))]
-    partial class ContactManageContextModelSnapshot : ModelSnapshot
+    [Migration("20230907144531_lazy_Loading3")]
+    partial class lazyLoading3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,6 +55,9 @@ namespace ContactManage.Migrations
                     b.Property<int>("ContactType_ID")
                         .HasColumnType("int");
 
+                    b.Property<int>("ContactTypesId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -69,7 +75,7 @@ namespace ContactManage.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContactType_ID");
+                    b.HasIndex("ContactTypesId");
 
                     b.ToTable("contacts");
                 });
@@ -78,7 +84,7 @@ namespace ContactManage.Migrations
                 {
                     b.HasOne("ContactManageEntities.DB.ContactTypes", "ContactTypes")
                         .WithMany("Contacts")
-                        .HasForeignKey("ContactType_ID")
+                        .HasForeignKey("ContactTypesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

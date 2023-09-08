@@ -3,6 +3,7 @@ using ContactManageEntities.DB;
 using ContactManageEntities.DTO.Record;
 using ContactManageRepositories;
 using ContactManageServices.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,39 +18,32 @@ namespace ContactManageServices.Services
         private readonly ContactManageContext _contactManage;
         private readonly ILogger<EssentialContacts> _logger;
 
-        public EssentialContacts()
-        {
-        }
-
         public EssentialContacts(ContactManageContext contactManage , ILogger<EssentialContacts> logger)
         {
-            _contactManage = contactManage;
             _logger = logger;
-
+            _contactManage = contactManage;
         }
-        public async Task<ContactRes> CreateContact(Contacts contactReq)
+        public async Task<Contacts> CreateContact(Contacts contactReq)
         {
-
-            await _contactManage.contacts.AddAsync(contactReq);
-            var result =  await _contactManage.SaveChangesAsync();
-            return new ContactRes();
-
-            
-        }
+             await _contactManage.contacts.AddAsync(contactReq);
+            var result = await _contactManage.SaveChangesAsync();
+             contactReq.Id = result;
+            return contactReq; 
+       }
 
         public Task<ContactRes> DeleteContact(int contactId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Contacts> GetContact(int contactId)
+        public Task<Contacts> CreatorConstructor(ContactReq contactReq)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ContactRes> GetContacts()
+        public async Task<List<Contacts>> GetContacts()
         {
-            throw new NotImplementedException();
+          return await _contactManage.contacts.AsNoTracking().ToListAsync(); 
         }
 
         public Task<ContactRes> UpdateContact(Contacts contactReq)

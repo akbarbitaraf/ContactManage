@@ -27,7 +27,10 @@ namespace ContactManageEntities.Mapper
                  .ForMember(x => x.Email, a => a.MapFrom(y => y.Email))
                  .ForMember(x => x.PhoneNumber, a => a.MapFrom(y => y.Mobile))
                  .ForMember(x => x.Name, a => a.MapFrom(y => y.Name))
-                 .ForMember(x => x.Family, a => a.MapFrom(y => y.Family));               
+                 .ForMember(x => x.Family, a => a.MapFrom(y => y.Family))
+                 .ForMember(x=>x.ID , a=>a.MapFrom(y=>y.Id)) 
+                 .ForMember(x=>x.ContactType , a=>a.MapFrom(y=>y.ContactType_ID));  
+            
 
 
         }

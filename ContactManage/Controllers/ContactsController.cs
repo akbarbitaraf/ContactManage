@@ -15,10 +15,10 @@ namespace ContactManage.Controllersx
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ContactController : Controller
+    public class ContactsController : Controller
     {
         private readonly ContactServices _contactServices;
-        public ContactController(ContactServices contactServices)
+        public ContactsController(ContactServices contactServices)
         {
             _contactServices = contactServices; 
         }
@@ -35,9 +35,9 @@ namespace ContactManage.Controllersx
             return await _contactServices.GetContact(id);
         }
         [HttpGet]
-        public async Task<ContactRes> GetContacts()
+        public async Task<List<ContactRes>> GetContacts()
         {
-            return await _contactServices.CreateContact(new ContactReq());
+            return await _contactServices.GetContacts();
         }
         [HttpDelete]
         public async Task<ContactRes> DeleteContact(int contactId)

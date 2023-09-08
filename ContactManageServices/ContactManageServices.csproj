@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ContactManageEntities\ContactManageEntities.csproj" />
     <ProjectReference Include="..\ContactManageRepositories\ContactManageRepositories.csproj" />
+    <ProjectReference Include="..\ContactManageTools\ContactManageTools.csproj" />
   </ItemGroup>
 
 </Project>

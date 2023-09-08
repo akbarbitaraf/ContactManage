@@ -6,6 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection.Metadata;
 
 namespace ContactManageEntities.DB
 {
@@ -22,8 +23,11 @@ namespace ContactManageEntities.DB
         public string? Email { get; set; }
         public string Mobile { get; set; }
         public string? Address { get; set; }
-        [ForeignKey("ContactType_ID")]
         public int ContactType_ID { get; set; }
+        [ForeignKey("ContactType_ID")]
+        public virtual ContactTypes ContactTypes { get; set; }
+
+
     }
 
 }
