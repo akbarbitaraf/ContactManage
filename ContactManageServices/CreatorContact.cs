@@ -39,10 +39,10 @@ namespace ContactManageServices
         {
             switch (type)
             {
-                case 0: return new EssentialContacts(_contactManage , _loggerEssentialContacts);
-                case 1: return new NormalContacts(_contactManage , _loggerNormalContacts);
+                case 0: return new EssentialContacts(_contactManage , _loggerEssentialContacts, _cache);
+                case 1: return new NormalContacts(_contactManage , _loggerNormalContacts, _cache);
                 case 2: return new ReliefContacts(_contactManage , _loggerReliefContacts ,_cache);
-                default: return new GlobalContacts(_contactManage, _loggerGlobalContacts);
+                default: return new GlobalContacts(_contactManage, _loggerGlobalContacts, _cache);
 
             }
         }

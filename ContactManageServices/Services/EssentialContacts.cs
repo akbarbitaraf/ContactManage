@@ -20,11 +20,13 @@ namespace ContactManageServices.Services
     {
         private readonly ContactManageContext _contactManage;
         private readonly ILogger<EssentialContacts> _logger;
+        private readonly IMemoryCache _cache;
 
-        public EssentialContacts(ContactManageContext contactManage , ILogger<EssentialContacts> logger)
+        public EssentialContacts(ContactManageContext contactManage , ILogger<EssentialContacts> logger, IMemoryCache cache)
         {
             _logger = logger;
             _contactManage = contactManage;
+            _cache = cache;
         }
         public async Task<Contacts> CreateContact(Contacts contactReq)
         {
