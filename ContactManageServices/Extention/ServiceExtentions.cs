@@ -7,6 +7,7 @@ using ContactManageServices.Services;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace ContactManageServices.Extention
 {
@@ -45,9 +46,11 @@ namespace ContactManageServices.Extention
         // add servicess in program  with centeral method
         public static void ConfigureServices(this IServiceCollection services)
         {
+            services.AddMemoryCache();
             services.AddScoped<ICreatorContact, CreatorContact>();
             services.AddScoped<IGlobalServices,GlobalServices>();
             services.AddTransient<ContactServices>();
+            //services.AddScoped<IMemoryCache>();
             services.ConfigureLoggerService();
 
         }

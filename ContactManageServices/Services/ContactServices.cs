@@ -4,6 +4,7 @@ using ContactManageEntities.DTO.Record;
 using ContactManageEntities.Enum;
 using ContactManageServices.Interfaces;
 using ContactManageTools;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 namespace ContactManageServices.Services
 {
@@ -56,7 +57,8 @@ namespace ContactManageServices.Services
         }
         public async Task<List<ContactRes>> GetContactsByFilter(ContactReq contactReq)
         {
-         if (contactReq == null)
+           
+            if (contactReq == null)
             {
                 _logger.LogError("Neccessary Input Filtering For Search") ;
                 GeneralExtention.ThrowException("فیلترهای ورودی الزامی می باشد" , HttpStatus.BadRequest);
