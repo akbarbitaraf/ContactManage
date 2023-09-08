@@ -1,15 +1,6 @@
-﻿//using Entities.DTO.Record;
-//using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-//using Services;
-//using Services.Interfaces;
-//using Services.Services;
-//using System.Data;
-
+﻿using Microsoft.AspNetCore.Mvc;
 using ContactManageServices.Services;
 using ContactManageEntities.DTO.Record;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
 
 namespace ContactManage.Controllersx
 {
@@ -23,31 +14,38 @@ namespace ContactManage.Controllersx
             _contactServices = contactServices; 
         }
         [HttpPost]
+        // Create Contact 
         public async Task<ContactRes> Creatorcontact([FromForm] ContactReq contactReq)
         {
             return await _contactServices.CreateContact(contactReq);
 
         }
+        // Get Contact By Contact ID 
         [HttpGet("id")]
-        // برای این مورد میتون  ریکوستی دیگه ای رو هم نوشت که براساس ورودی های جستجو کرد
-        public async Task<ContactRes> GetContact(int id)
+        public async Task<ContactRes> GetContactByID(int id)
         {
-            return await _contactServices.GetContact(id);
+            return await _contactServices.GetContactByID(id);
         }
         [HttpGet]
         public async Task<List<ContactRes>> GetContacts()
         {
             return await _contactServices.GetContacts();
         }
-        [HttpDelete]
-        public async Task<ContactRes> DeleteContact(int contactId)
+        [HttpPost("ContactsByFilter")]
+        public async Task<List<ContactRes>> GetContactsByFilter([FromBody] ContactReq contactReq)
         {
-            throw new NotImplementedException();
+            return await _contactServices.GetContactsByFilter(contactReq);
+        }
+        [HttpDelete]
+        public async Task<bool> DeleteContact(int contactId)
+        {
+            await _contactServices.DeleteContact(contactId);
+            return true;
         }
         [HttpPut]
         public async Task<ContactRes> UpdateContact([FromForm] ContactReq contactReq)
         {
-            throw new NotImplementedException();
+            return await _contactServices.UpdateContact(contactReq);
         }
 
     }
