@@ -5,6 +5,7 @@ using ContactManageRepositories;
 using ContactManageServices.Interfaces;
 using ContactManageTools;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using ServiceStack;
 using System;
@@ -40,14 +41,30 @@ namespace ContactManageServices.Services
         public async Task<List<Contacts>> GetContactsByFilter(ContactReq contactReq)
         {
             // find contact with filtering 
-            var result = await _contactManage.contacts.Where(x => (contactReq.Name.IsNullOrEmpty() ? 1 == 1 : contactReq.Name == x.Name) &&
+            var cacheKey = $"Contact_{contactReq.Name}_{contactReq.Family}_{contactReq.ID}_{contactReq.ContactType}";
+            if (!_cache.TryGetValue(cacheKey, out IEnumerable<Contacts> contacts))
+            {
+                // Cache miss, query the database
+                contacts = await _contactManage.contacts.Where(x => (contactReq.Name.IsNullOrEmpty() ? 1 == 1 : contactReq.Name == x.Name) &&
                        (contactReq.Family.IsNullOrEmpty() ? 1 == 1 : contactReq.Family == x.Family) &&
                        (contactReq.PhoneNumber.IsNullOrEmpty() ? 1 == 1 : contactReq.PhoneNumber == x.Mobile) &&
                        (contactReq.Address.IsNullOrEmpty() ? 1 == 1 : x.Address.Equals(contactReq.Address)) &&
                        (contactReq.ContactType == null ? 1 == 1 : (int)contactReq.ContactType == x.ContactType_ID
                        )
                        ).AsNoTracking().ToListAsync();
-            return result;
+
+
+                // Define the cache entry options
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                // Set the absolute expiration to one day
+                .SetAbsoluteExpiration(TimeSpan.FromDays(1))
+                // Set the size of the cache entry
+                .SetSize(1);
+
+                // Set the query result in the cache
+                _cache.Set(cacheKey, contacts, cacheEntryOptions);
+            }
+            return new List<Contacts>(contacts);
         }
 
         public async Task<List<Contacts>> GetContacts()
