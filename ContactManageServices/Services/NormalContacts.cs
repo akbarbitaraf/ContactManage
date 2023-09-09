@@ -57,7 +57,7 @@ namespace ContactManageServices.Services
 
         public async Task<List<Contacts>> GetContactsByFilter(ContactReq contactReq)
         {
-            var cacheKey = $"Contact_{contactReq.Name}_{contactReq.Family}_{contactReq.ID}_{contactReq.ContactType}";
+            var cacheKey = $"Contact_{contactReq.Name}_{contactReq.Family}_{contactReq.ID.ToString()}_{contactReq.ContactType.ToString()}";
             if (!_cache.TryGetValue(cacheKey, out IEnumerable<Contacts> contacts))
             {
                 // Cache miss, query the database
